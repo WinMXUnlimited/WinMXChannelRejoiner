@@ -39,7 +39,7 @@ namespace WinMXChannelRejoiner.Manager
 
         public void Start()
         {
-            Updater = new Timer(new TimerCallback(ManageChannels), null, 5000, 25000);
+            Updater = new Timer(new TimerCallback(ManageChannels), null, 5000, 30000);
         }
 
         public void Stop()
