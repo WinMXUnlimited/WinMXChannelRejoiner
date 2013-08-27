@@ -50,18 +50,18 @@ namespace WinMXChannelRejoiner.Manager
 
         void ManageChannels(object o)
         {
+            // Get Open Channels
             var channels = API.GetOpenChatRooms().ToList();
             if (channels.Count == 0) return;
 
+            // Get Open Connections on WinMX.exe
             var connections = NetworkInfo.GetActiveConnections(ProcessInfo.GetWinMXProcessID()).ToList();
 
             foreach(var room in channels) 
             {
                 var ep = HashCode.HashToEndPoint(room);
                 if (!connections.Contains(ep))
-                {
                     API.JoinChatRoom(room);
-                }
             }
         }
     }

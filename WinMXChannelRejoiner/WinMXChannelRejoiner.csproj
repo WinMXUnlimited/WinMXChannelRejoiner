@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>icon256.ico</ApplicationIcon>
+    <ApplicationIcon>rejoinericon256px.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -91,8 +91,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icon256.ico" />
     <Content Include="COPYING.txt" />
+    <Content Include="rejoinericon256px.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
