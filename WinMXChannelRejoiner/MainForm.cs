@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WinMXChannelRejoiner.Manager;
+using WinMXWindowApi;
 
 namespace WinMXChannelRejoiner
 {
@@ -56,7 +57,47 @@ namespace WinMXChannelRejoiner
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            
+            LoadUISettings();
+        }
+
+        private void LoadUISettings()
+        {
+            switch (Properties.Settings.Default.RejoinDuration)
+            {
+                case 2:
+                    Combo_RejoinDuration.SelectedItem = "two";
+                    break;
+                case 5:
+                    Combo_RejoinDuration.SelectedItem = "five";
+                    break;
+                case 10:
+                    Combo_RejoinDuration.SelectedItem = "ten";
+                    break;
+                // default and 1
+                case 1:
+                default:
+                    Combo_RejoinDuration.SelectedItem = "one";
+                    break;
+            }
+
+            switch (Properties.Settings.Default.MaximumAttempts)
+            {
+                case 1:
+                    Combo_MaximumAttempts.SelectedItem = "one";
+                    break;
+                case 5:
+                    Combo_MaximumAttempts.SelectedItem = "five";
+                    break;
+                case 10:
+                    Combo_MaximumAttempts.SelectedItem = "ten";
+                    break;
+                case 20:
+                    Combo_MaximumAttempts.SelectedItem = "twenty";
+                    break;
+                default:
+                    Combo_MaximumAttempts.SelectedItem = "unlimited";
+                    break;
+            }
         }
 
         private void MainIcon_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -90,5 +131,91 @@ namespace WinMXChannelRejoiner
             Button_Start.Enabled = true;
             Button_Stop.Enabled = false;
         }
+
+        /// <summary>
+        /// Updates the list box of open channels.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Timer_ChannelUpdater_Tick(object sender, EventArgs e)
+        {
+            var openchannels = API.GetOpenChatRooms();
+            var excludedchannels = Manager.GetExcludedChannels();
+            var current = List_ChatRooms.Items.Cast<String>();
+
+            /*
+             * Note: Clearing/Adding all channels on every tick works but is not good for UX since selected items
+             * get unselected on every update.
+             */
+
+            // Remove items from listbox that no longer need to be there.
+            current.Where(c => !openchannels.Contains(c)).ToList().ForEach((channel) => 
+                List_ChatRooms.Items.Remove(channel));
+
+            // Add items to the listbox that need to be there.
+            openchannels.Where(c => !current.Contains(c)).ToList().ForEach((channel) => 
+                List_ChatRooms.Items.Add(channel, !excludedchannels.Contains(channel)));
+        }
+
+        private void List_ChatRooms_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if (e.NewValue == CheckState.Unchecked)
+                Manager.AddChannel(List_ChatRooms.Items[e.Index] as string);
+            else
+                Manager.RemoveChannel(List_ChatRooms.Items[e.Index] as string);
+        }
+
+        private void Combo_RejoinDuration_SelectedValueChanged(object sender, EventArgs e)
+        {
+            int duration = 1;
+
+            switch(Combo_RejoinDuration.Text) {
+                case "one":
+                    duration = 1;
+                    break;
+                case "two":
+                    duration = 2;
+                    break;
+                case "five":
+                    duration = 5;
+                    break;
+                case "ten":
+                    duration = 10;
+                    break;
+                default:
+                    break;
+            }
+
+            Manager.UpdateRejoinDuration(duration);
+        }
+
+        private void Combo_MaximumAttempts_SelectedValueChanged(object sender, EventArgs e)
+        {
+            int maximum = -1;
+
+            switch (Combo_MaximumAttempts.Text)
+            {
+                case "one":
+                    maximum = 1;
+                    break;
+                case "five":
+                    maximum = 5;
+                    break;
+                case "ten":
+                    maximum = 10;
+                    break;
+                case "twenty":
+                    maximum = 20;
+                    break;
+                case "unlimited":
+                    maximum = -1;
+                    break;
+                default:
+                    break;
+            }
+
+            Manager.UpdateMaximumAttempts(maximum);
+        }
+        
     }
 }

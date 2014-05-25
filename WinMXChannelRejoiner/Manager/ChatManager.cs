@@ -25,21 +25,47 @@ using System.Threading;
 using WinMXWindowApi;
 using WinMXChannelRejoiner.Tools;
 using System.Diagnostics;
+using System.Collections.Specialized;
+using System.Runtime.Caching;
 
 namespace WinMXChannelRejoiner.Manager
 {
     public class ChatManager
     {
         Timer Updater;
+        List<String> ExcludedChannels;
+        List<JoinAttempt> Attempts;
+        int RejoinDuration;
+        int MaximumAttempts;
 
+        
         public ChatManager()
         {
-            
+            ExcludedChannels = new List<string>();
+            Attempts = new List<JoinAttempt>();
+            LoadSettings();
+        }
+
+        void LoadSettings()
+        {
+            ExcludedChannels.AddRange(Properties.Settings.Default.ExcludedChannels.Cast<String>());
+            RejoinDuration = Properties.Settings.Default.RejoinDuration;
+            MaximumAttempts = Properties.Settings.Default.MaximumAttempts;
+        }
+
+        void SaveSettings()
+        {
+            var tmp = new StringCollection();
+            tmp.AddRange(ExcludedChannels.ToArray());
+            Properties.Settings.Default.ExcludedChannels = tmp;
+            Properties.Settings.Default.MaximumAttempts = MaximumAttempts;
+            Properties.Settings.Default.RejoinDuration = RejoinDuration;
+            Properties.Settings.Default.Save();
         }
 
         public void Start()
         {
-            Updater = new Timer(new TimerCallback(ManageChannels), null, 5000, 30000);
+            Updater = new Timer(new TimerCallback(ManageChannels), null, 5000, RejoinDuration * 1000);
         }
 
         public void Stop()
@@ -50,6 +76,9 @@ namespace WinMXChannelRejoiner.Manager
 
         void ManageChannels(object o)
         {
+            Attempts.Where(c => DateTime.UtcNow.Subtract(c.Timestamp).TotalHours >= 1).ToList().ForEach((item) =>
+                Attempts.Remove(item));
+
             // Get Open Channels
             var channels = API.GetOpenChatRooms().ToList();
             if (channels.Count == 0) return;
@@ -57,12 +86,54 @@ namespace WinMXChannelRejoiner.Manager
             // Get Open Connections on WinMX.exe
             var connections = NetworkInfo.GetActiveConnections(ProcessInfo.GetWinMXProcessID()).ToList();
 
-            foreach(var room in channels) 
+            channels.ForEach((room) =>
             {
-                var ep = HashCode.HashToEndPoint(room);
-                if (!connections.Contains(ep))
-                    API.JoinChatRoom(room);
-            }
+                if (!connections.Contains(HashCode.HashToEndPoint(room)))
+                    if(!ExcludedChannels.Contains(room)) 
+                        if (MaximumAttempts == -1 || Attempts.Count(c => c.Channel == room) < MaximumAttempts)
+                        {
+                            API.JoinChatRoom(room);
+                            Attempts.Add(new JoinAttempt() { Channel = room, Timestamp = DateTime.UtcNow });
+                        }
+            });
+        }
+
+        public void AddChannel(string Channel)
+        {
+            ExcludedChannels.Add(Channel);
+            SaveSettings();
+        }
+
+        public void RemoveChannel(string Channel)
+        {
+            ExcludedChannels.Remove(Channel);
+            SaveSettings();
+        }
+
+        public List<String> GetExcludedChannels()
+        {
+            return ExcludedChannels.ToList();
+        }
+
+        public void UpdateRejoinDuration(int Minutes)
+        {
+            RejoinDuration = Minutes;
+            SaveSettings();
+            
+            if (Updater != null)
+                Updater.Change(0, RejoinDuration * 60000);
+        }
+
+        public void UpdateMaximumAttempts(int Attempts)
+        {
+            MaximumAttempts = Attempts;
+            SaveSettings();
+        }
+
+        struct JoinAttempt
+        {
+            public string Channel;
+            public DateTime Timestamp;
         }
     }
 }
