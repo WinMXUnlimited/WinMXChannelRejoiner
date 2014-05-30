@@ -47,6 +47,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.Combo_MaximumAttempts = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.check_AutoStartOnStartup = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.IconStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -123,7 +124,7 @@
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(19, 534);
+            this.label1.Location = new System.Drawing.Point(19, 583);
             this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(741, 104);
@@ -138,6 +139,7 @@
             this.List_ChatRooms.Location = new System.Drawing.Point(24, 105);
             this.List_ChatRooms.Name = "List_ChatRooms";
             this.List_ChatRooms.Size = new System.Drawing.Size(727, 264);
+            this.List_ChatRooms.Sorted = true;
             this.List_ChatRooms.TabIndex = 4;
             this.List_ChatRooms.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.List_ChatRooms_ItemCheck);
             // 
@@ -207,6 +209,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.check_AutoStartOnStartup);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.Combo_MaximumAttempts);
@@ -215,10 +218,21 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Location = new System.Drawing.Point(24, 385);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(727, 135);
+            this.groupBox1.Size = new System.Drawing.Size(727, 177);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
+            // 
+            // check_AutoStartOnStartup
+            // 
+            this.check_AutoStartOnStartup.AutoSize = true;
+            this.check_AutoStartOnStartup.Location = new System.Drawing.Point(21, 133);
+            this.check_AutoStartOnStartup.Name = "check_AutoStartOnStartup";
+            this.check_AutoStartOnStartup.Size = new System.Drawing.Size(670, 29);
+            this.check_AutoStartOnStartup.TabIndex = 11;
+            this.check_AutoStartOnStartup.Text = "Automatically open and start the rejoiner when windows boots up.";
+            this.check_AutoStartOnStartup.UseVisualStyleBackColor = true;
+            this.check_AutoStartOnStartup.CheckStateChanged += new System.EventHandler(this.check_AutoStartOnStartup_CheckStateChanged);
             // 
             // label5
             // 
@@ -233,7 +247,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(775, 650);
+            this.ClientSize = new System.Drawing.Size(775, 696);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.List_ChatRooms);
             this.Controls.Add(this.label1);
@@ -275,6 +289,7 @@
         private System.Windows.Forms.ComboBox Combo_MaximumAttempts;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox check_AutoStartOnStartup;
     }
 }
 

@@ -27,6 +27,8 @@ using WinMXChannelRejoiner.Tools;
 using System.Diagnostics;
 using System.Collections.Specialized;
 using System.Runtime.Caching;
+using WinMXChannelRejoiner.Properties;
+using Microsoft.Win32;
 
 namespace WinMXChannelRejoiner.Manager
 {
@@ -37,6 +39,7 @@ namespace WinMXChannelRejoiner.Manager
         List<JoinAttempt> Attempts;
         int RejoinDuration;
         int MaximumAttempts;
+        bool OpenOnBootup;
 
         
         public ChatManager()
@@ -48,24 +51,26 @@ namespace WinMXChannelRejoiner.Manager
 
         void LoadSettings()
         {
-            ExcludedChannels.AddRange(Properties.Settings.Default.ExcludedChannels.Cast<String>());
-            RejoinDuration = Properties.Settings.Default.RejoinDuration;
-            MaximumAttempts = Properties.Settings.Default.MaximumAttempts;
+            ExcludedChannels.AddRange(Settings.Default.ExcludedChannels.Cast<String>());
+            RejoinDuration = Settings.Default.RejoinDuration;
+            MaximumAttempts = Settings.Default.MaximumAttempts;
+            OpenOnBootup = Settings.Default.OpenOnBootup;
         }
 
         void SaveSettings()
         {
             var tmp = new StringCollection();
             tmp.AddRange(ExcludedChannels.ToArray());
-            Properties.Settings.Default.ExcludedChannels = tmp;
-            Properties.Settings.Default.MaximumAttempts = MaximumAttempts;
-            Properties.Settings.Default.RejoinDuration = RejoinDuration;
-            Properties.Settings.Default.Save();
+            Settings.Default.ExcludedChannels = tmp;
+            Settings.Default.MaximumAttempts = MaximumAttempts;
+            Settings.Default.RejoinDuration = RejoinDuration;
+            Settings.Default.OpenOnBootup = OpenOnBootup;
+            Settings.Default.Save();
         }
 
         public void Start()
         {
-            Updater = new Timer(new TimerCallback(ManageChannels), null, 5000, RejoinDuration * 1000);
+            Updater = new Timer(new TimerCallback(ManageChannels), null, 5000, RejoinDuration * 60000);
         }
 
         public void Stop()
@@ -128,6 +133,27 @@ namespace WinMXChannelRejoiner.Manager
         {
             MaximumAttempts = Attempts;
             SaveSettings();
+        }
+
+        public void UpdateOpenOnBootup(bool value)
+        {
+            OpenOnBootup = value;
+            SaveSettings();
+
+            if (value)
+            {
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+                {
+                    key.SetValue("WinMX Channel Rejoiner", "\"" + System.Windows.Forms.Application.ExecutablePath + "\"");
+                }
+            } 
+            else
+            {
+                using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+                {
+                    key.DeleteValue("WinMX Channel rejoiner", false);
+                }
+            }
         }
 
         struct JoinAttempt

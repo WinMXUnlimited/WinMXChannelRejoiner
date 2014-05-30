@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WinMXChannelRejoiner.Manager;
+using WinMXChannelRejoiner.Properties;
 using WinMXWindowApi;
 
 namespace WinMXChannelRejoiner
@@ -62,7 +63,7 @@ namespace WinMXChannelRejoiner
 
         private void LoadUISettings()
         {
-            switch (Properties.Settings.Default.RejoinDuration)
+            switch (Settings.Default.RejoinDuration)
             {
                 case 2:
                     Combo_RejoinDuration.SelectedItem = "two";
@@ -80,7 +81,7 @@ namespace WinMXChannelRejoiner
                     break;
             }
 
-            switch (Properties.Settings.Default.MaximumAttempts)
+            switch (Settings.Default.MaximumAttempts)
             {
                 case 1:
                     Combo_MaximumAttempts.SelectedItem = "one";
@@ -97,6 +98,14 @@ namespace WinMXChannelRejoiner
                 default:
                     Combo_MaximumAttempts.SelectedItem = "unlimited";
                     break;
+            }
+
+            if (Settings.Default.OpenOnBootup)
+            {
+                check_AutoStartOnStartup.CheckState = CheckState.Checked;
+                Button_Start.Enabled = false;
+                Button_Stop.Enabled = true;
+                Manager.Start();
             }
         }
 
@@ -215,6 +224,11 @@ namespace WinMXChannelRejoiner
             }
 
             Manager.UpdateMaximumAttempts(maximum);
+        }
+
+        private void check_AutoStartOnStartup_CheckStateChanged(object sender, EventArgs e)
+        {
+            Manager.UpdateOpenOnBootup(check_AutoStartOnStartup.CheckState == CheckState.Checked);
         }
         
     }

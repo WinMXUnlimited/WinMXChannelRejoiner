@@ -59,5 +59,17 @@ namespace WinMXChannelRejoiner.Properties {
                 this["MaximumAttempts"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool OpenOnBootup {
+            get {
+                return ((bool)(this["OpenOnBootup"]));
+            }
+            set {
+                this["OpenOnBootup"] = value;
+            }
+        }
     }
 }
