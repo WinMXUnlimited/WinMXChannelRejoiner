@@ -58,7 +58,20 @@ namespace WinMXChannelRejoiner
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            LoadUISettings();
+            
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            try
+            {
+                LoadUISettings();
+            }
+            catch(Exception)
+            {
+                Settings.Default.Reset();
+                MessageBox.Show("An error occured and we were unable to load your previous settings file. Please take the time to configure the rejoiner to your prefernces once more.", "Error reading configuration file");
+            }
         }
 
         private void LoadUISettings()
@@ -230,6 +243,6 @@ namespace WinMXChannelRejoiner
         {
             Manager.UpdateOpenOnBootup(check_AutoStartOnStartup.CheckState == CheckState.Checked);
         }
-        
+
     }
 }

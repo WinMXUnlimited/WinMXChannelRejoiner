@@ -46,7 +46,10 @@ namespace WinMXChannelRejoiner.Manager
         {
             ExcludedChannels = new List<string>();
             Attempts = new List<JoinAttempt>();
-            LoadSettings();
+
+        
+        //    LoadSettings();
+          
         }
 
         void LoadSettings()
