@@ -93,7 +93,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="COPYING.txt" />
+    <None Include="LICENSE" />
     <Content Include="rejoinericon256px.ico" />
   </ItemGroup>
   <ItemGroup>
