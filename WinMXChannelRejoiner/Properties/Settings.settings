@@ -15,5 +15,11 @@
     <Setting Name="OpenOnBootup" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="SendAutoRejoinMessage" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AutoRejoinMessage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Hi, I just rejoined because the WinMX Channel Rejoiner put me back in here! - http://bit.ly/winmxchannelrejoiner</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -120,6 +120,14 @@ namespace WinMXChannelRejoiner
                 Button_Stop.Enabled = true;
                 Manager.Start();
             }
+
+            if (Settings.Default.SendAutoRejoinMessage)
+            {
+                check_SendAutoRejoinMessage.CheckState = CheckState.Checked;
+                textBox_AutoRejoinMessage.Enabled = true;
+            }
+
+            textBox_AutoRejoinMessage.Text = Settings.Default.AutoRejoinMessage;
         }
 
         private void MainIcon_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -244,5 +252,15 @@ namespace WinMXChannelRejoiner
             Manager.UpdateOpenOnBootup(check_AutoStartOnStartup.CheckState == CheckState.Checked);
         }
 
+        private void check_AutoRejoinMessage_CheckStateChanged(object sender, EventArgs e)
+        {
+            Manager.UpdateSendAutoRejoinMessage(check_SendAutoRejoinMessage.CheckState == CheckState.Checked);
+            textBox_AutoRejoinMessage.Enabled = check_SendAutoRejoinMessage.CheckState == CheckState.Checked;
+        }
+
+        private void textBox_AutoRejoinMessage_TextChanged(object sender, EventArgs e)
+        {
+            Manager.UpdateAutoRejoinMessage(textBox_AutoRejoinMessage.Text);
+        }
     }
 }

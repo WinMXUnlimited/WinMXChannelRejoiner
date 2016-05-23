@@ -47,6 +47,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.Combo_MaximumAttempts = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox_AutoRejoinMessage = new System.Windows.Forms.TextBox();
+            this.check_SendAutoRejoinMessage = new System.Windows.Forms.CheckBox();
             this.check_AutoStartOnStartup = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.IconStrip.SuspendLayout();
@@ -71,40 +73,39 @@
             this.exitToolStripMenuItem});
             this.IconStrip.Name = "IconStrip";
             this.IconStrip.ShowImageMargin = false;
-            this.IconStrip.Size = new System.Drawing.Size(124, 118);
+            this.IconStrip.Size = new System.Drawing.Size(79, 76);
             // 
             // showToolStripMenuItem
             // 
             this.showToolStripMenuItem.Name = "showToolStripMenuItem";
-            this.showToolStripMenuItem.Size = new System.Drawing.Size(123, 36);
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(78, 22);
             this.showToolStripMenuItem.Text = "Show";
             this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
             // 
             // hideToolStripMenuItem
             // 
             this.hideToolStripMenuItem.Name = "hideToolStripMenuItem";
-            this.hideToolStripMenuItem.Size = new System.Drawing.Size(123, 36);
+            this.hideToolStripMenuItem.Size = new System.Drawing.Size(78, 22);
             this.hideToolStripMenuItem.Text = "Hide";
             this.hideToolStripMenuItem.Click += new System.EventHandler(this.hideToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(120, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(75, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(123, 36);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(78, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // Button_Start
             // 
-            this.Button_Start.Location = new System.Drawing.Point(24, 23);
-            this.Button_Start.Margin = new System.Windows.Forms.Padding(6);
+            this.Button_Start.Location = new System.Drawing.Point(12, 12);
             this.Button_Start.Name = "Button_Start";
-            this.Button_Start.Size = new System.Drawing.Size(362, 73);
+            this.Button_Start.Size = new System.Drawing.Size(181, 38);
             this.Button_Start.TabIndex = 1;
             this.Button_Start.Text = "Start";
             this.Button_Start.UseVisualStyleBackColor = true;
@@ -113,10 +114,9 @@
             // Button_Stop
             // 
             this.Button_Stop.Enabled = false;
-            this.Button_Stop.Location = new System.Drawing.Point(398, 23);
-            this.Button_Stop.Margin = new System.Windows.Forms.Padding(6);
+            this.Button_Stop.Location = new System.Drawing.Point(199, 12);
             this.Button_Stop.Name = "Button_Stop";
-            this.Button_Stop.Size = new System.Drawing.Size(362, 73);
+            this.Button_Stop.Size = new System.Drawing.Size(181, 38);
             this.Button_Stop.TabIndex = 2;
             this.Button_Stop.Text = "Stop";
             this.Button_Stop.UseVisualStyleBackColor = true;
@@ -124,10 +124,9 @@
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(19, 583);
-            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label1.Location = new System.Drawing.Point(9, 348);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(741, 104);
+            this.label1.Size = new System.Drawing.Size(370, 54);
             this.label1.TabIndex = 3;
             this.label1.Text = "Please make sure WinMX is set to hold windows open after parting. This can be fou" +
     "nd under the commands button.\r\n\r\nNote: Minimize this window to hide this app in " +
@@ -136,9 +135,10 @@
             // List_ChatRooms
             // 
             this.List_ChatRooms.FormattingEnabled = true;
-            this.List_ChatRooms.Location = new System.Drawing.Point(24, 105);
+            this.List_ChatRooms.Location = new System.Drawing.Point(12, 55);
+            this.List_ChatRooms.Margin = new System.Windows.Forms.Padding(2);
             this.List_ChatRooms.Name = "List_ChatRooms";
-            this.List_ChatRooms.Size = new System.Drawing.Size(727, 264);
+            this.List_ChatRooms.Size = new System.Drawing.Size(366, 139);
             this.List_ChatRooms.Sorted = true;
             this.List_ChatRooms.TabIndex = 4;
             this.List_ChatRooms.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.List_ChatRooms_ItemCheck);
@@ -158,36 +158,40 @@
             "two",
             "five",
             "ten"});
-            this.Combo_RejoinDuration.Location = new System.Drawing.Point(302, 30);
+            this.Combo_RejoinDuration.Location = new System.Drawing.Point(151, 16);
+            this.Combo_RejoinDuration.Margin = new System.Windows.Forms.Padding(2);
             this.Combo_RejoinDuration.Name = "Combo_RejoinDuration";
-            this.Combo_RejoinDuration.Size = new System.Drawing.Size(148, 33);
+            this.Combo_RejoinDuration.Size = new System.Drawing.Size(76, 21);
             this.Combo_RejoinDuration.TabIndex = 5;
             this.Combo_RejoinDuration.SelectedValueChanged += new System.EventHandler(this.Combo_RejoinDuration_SelectedValueChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(64, 41);
+            this.label2.Location = new System.Drawing.Point(32, 21);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(232, 25);
+            this.label2.Size = new System.Drawing.Size(114, 13);
             this.label2.TabIndex = 6;
             this.label2.Text = "Attempt rejoining every";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(145, 86);
+            this.label3.Location = new System.Drawing.Point(72, 45);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(151, 25);
+            this.label3.Size = new System.Drawing.Size(74, 13);
             this.label3.TabIndex = 7;
             this.label3.Text = "a maximum of ";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(473, 86);
+            this.label4.Location = new System.Drawing.Point(236, 45);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(169, 25);
+            this.label4.Size = new System.Drawing.Size(82, 13);
             this.label4.TabIndex = 8;
             this.label4.Text = "time(s) per hour.";
             // 
@@ -201,14 +205,17 @@
             "ten",
             "twenty",
             "unlimited"});
-            this.Combo_MaximumAttempts.Location = new System.Drawing.Point(302, 78);
+            this.Combo_MaximumAttempts.Location = new System.Drawing.Point(151, 41);
+            this.Combo_MaximumAttempts.Margin = new System.Windows.Forms.Padding(2);
             this.Combo_MaximumAttempts.Name = "Combo_MaximumAttempts";
-            this.Combo_MaximumAttempts.Size = new System.Drawing.Size(148, 33);
+            this.Combo_MaximumAttempts.Size = new System.Drawing.Size(76, 21);
             this.Combo_MaximumAttempts.TabIndex = 9;
             this.Combo_MaximumAttempts.SelectedValueChanged += new System.EventHandler(this.Combo_MaximumAttempts_SelectedValueChanged);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.textBox_AutoRejoinMessage);
+            this.groupBox1.Controls.Add(this.check_SendAutoRejoinMessage);
             this.groupBox1.Controls.Add(this.check_AutoStartOnStartup);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
@@ -216,19 +223,44 @@
             this.groupBox1.Controls.Add(this.Combo_RejoinDuration);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(24, 385);
+            this.groupBox1.Location = new System.Drawing.Point(12, 200);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(727, 177);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(364, 146);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
             // 
+            // textBox_AutoRejoinMessage
+            // 
+            this.textBox_AutoRejoinMessage.Enabled = false;
+            this.textBox_AutoRejoinMessage.Location = new System.Drawing.Point(10, 112);
+            this.textBox_AutoRejoinMessage.MaxLength = 350;
+            this.textBox_AutoRejoinMessage.Name = "textBox_AutoRejoinMessage";
+            this.textBox_AutoRejoinMessage.Size = new System.Drawing.Size(344, 20);
+            this.textBox_AutoRejoinMessage.TabIndex = 13;
+            this.textBox_AutoRejoinMessage.TextChanged += new System.EventHandler(this.textBox_AutoRejoinMessage_TextChanged);
+            // 
+            // check_SendAutoRejoinMessage
+            // 
+            this.check_SendAutoRejoinMessage.AutoSize = true;
+            this.check_SendAutoRejoinMessage.Location = new System.Drawing.Point(10, 90);
+            this.check_SendAutoRejoinMessage.Margin = new System.Windows.Forms.Padding(2);
+            this.check_SendAutoRejoinMessage.Name = "check_SendAutoRejoinMessage";
+            this.check_SendAutoRejoinMessage.Size = new System.Drawing.Size(344, 17);
+            this.check_SendAutoRejoinMessage.TabIndex = 12;
+            this.check_SendAutoRejoinMessage.Text = "Send a message on my behalf saying I\'ve auto rejoined a chatroom.";
+            this.check_SendAutoRejoinMessage.UseVisualStyleBackColor = true;
+            this.check_SendAutoRejoinMessage.CheckStateChanged += new System.EventHandler(this.check_AutoRejoinMessage_CheckStateChanged);
+            // 
             // check_AutoStartOnStartup
             // 
             this.check_AutoStartOnStartup.AutoSize = true;
-            this.check_AutoStartOnStartup.Location = new System.Drawing.Point(21, 133);
+            this.check_AutoStartOnStartup.Location = new System.Drawing.Point(10, 69);
+            this.check_AutoStartOnStartup.Margin = new System.Windows.Forms.Padding(2);
             this.check_AutoStartOnStartup.Name = "check_AutoStartOnStartup";
-            this.check_AutoStartOnStartup.Size = new System.Drawing.Size(670, 29);
+            this.check_AutoStartOnStartup.Size = new System.Drawing.Size(334, 17);
             this.check_AutoStartOnStartup.TabIndex = 11;
             this.check_AutoStartOnStartup.Text = "Automatically open and start the rejoiner when windows boots up.";
             this.check_AutoStartOnStartup.UseVisualStyleBackColor = true;
@@ -237,17 +269,18 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(473, 41);
+            this.label5.Location = new System.Drawing.Point(236, 21);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(101, 25);
+            this.label5.Size = new System.Drawing.Size(49, 13);
             this.label5.TabIndex = 10;
             this.label5.Text = "minute(s)";
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(775, 696);
+            this.ClientSize = new System.Drawing.Size(388, 411);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.List_ChatRooms);
             this.Controls.Add(this.label1);
@@ -255,10 +288,9 @@
             this.Controls.Add(this.Button_Start);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Text = "WinMX Channel Rejoiner v1.1";
+            this.Text = "WinMX Channel Rejoiner v1.2";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
@@ -291,6 +323,8 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox check_AutoStartOnStartup;
+        private System.Windows.Forms.CheckBox check_SendAutoRejoinMessage;
+        private System.Windows.Forms.TextBox textBox_AutoRejoinMessage;
     }
 }
 
