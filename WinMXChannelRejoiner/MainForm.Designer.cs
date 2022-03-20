@@ -136,9 +136,9 @@
             // 
             this.List_ChatRooms.FormattingEnabled = true;
             this.List_ChatRooms.Location = new System.Drawing.Point(12, 55);
-            this.List_ChatRooms.Margin = new System.Windows.Forms.Padding(2);
+            this.List_ChatRooms.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.List_ChatRooms.Name = "List_ChatRooms";
-            this.List_ChatRooms.Size = new System.Drawing.Size(366, 139);
+            this.List_ChatRooms.Size = new System.Drawing.Size(366, 124);
             this.List_ChatRooms.Sorted = true;
             this.List_ChatRooms.TabIndex = 4;
             this.List_ChatRooms.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.List_ChatRooms_ItemCheck);
@@ -159,7 +159,7 @@
             "five",
             "ten"});
             this.Combo_RejoinDuration.Location = new System.Drawing.Point(151, 16);
-            this.Combo_RejoinDuration.Margin = new System.Windows.Forms.Padding(2);
+            this.Combo_RejoinDuration.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Combo_RejoinDuration.Name = "Combo_RejoinDuration";
             this.Combo_RejoinDuration.Size = new System.Drawing.Size(76, 21);
             this.Combo_RejoinDuration.TabIndex = 5;
@@ -206,7 +206,7 @@
             "twenty",
             "unlimited"});
             this.Combo_MaximumAttempts.Location = new System.Drawing.Point(151, 41);
-            this.Combo_MaximumAttempts.Margin = new System.Windows.Forms.Padding(2);
+            this.Combo_MaximumAttempts.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Combo_MaximumAttempts.Name = "Combo_MaximumAttempts";
             this.Combo_MaximumAttempts.Size = new System.Drawing.Size(76, 21);
             this.Combo_MaximumAttempts.TabIndex = 9;
@@ -224,9 +224,9 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Location = new System.Drawing.Point(12, 200);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.groupBox1.Size = new System.Drawing.Size(364, 146);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
@@ -246,7 +246,7 @@
             // 
             this.check_SendAutoRejoinMessage.AutoSize = true;
             this.check_SendAutoRejoinMessage.Location = new System.Drawing.Point(10, 90);
-            this.check_SendAutoRejoinMessage.Margin = new System.Windows.Forms.Padding(2);
+            this.check_SendAutoRejoinMessage.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.check_SendAutoRejoinMessage.Name = "check_SendAutoRejoinMessage";
             this.check_SendAutoRejoinMessage.Size = new System.Drawing.Size(344, 17);
             this.check_SendAutoRejoinMessage.TabIndex = 12;
@@ -258,7 +258,7 @@
             // 
             this.check_AutoStartOnStartup.AutoSize = true;
             this.check_AutoStartOnStartup.Location = new System.Drawing.Point(10, 69);
-            this.check_AutoStartOnStartup.Margin = new System.Windows.Forms.Padding(2);
+            this.check_AutoStartOnStartup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.check_AutoStartOnStartup.Name = "check_AutoStartOnStartup";
             this.check_AutoStartOnStartup.Size = new System.Drawing.Size(334, 17);
             this.check_AutoStartOnStartup.TabIndex = 11;
@@ -290,9 +290,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Text = "WinMX Channel Rejoiner v1.2";
+            this.Text = "WinMX Channel Rejoiner v1.3";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.IconStrip.ResumeLayout(false);
