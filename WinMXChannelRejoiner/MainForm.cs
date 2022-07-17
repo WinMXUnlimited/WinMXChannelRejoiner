@@ -56,13 +56,46 @@ namespace WinMXChannelRejoiner
             this.Hide();
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private void Manager_RunningStateChanged(bool state, bool fromUptimeManager)
         {
-            
+            Invoke(new Action(() =>
+            {
+                // Stop
+                if (!state)
+                {
+                    if (fromUptimeManager)
+                    {
+                        Button_Start.Enabled = false;
+                        Button_Start.Text = "Disabled until WinMX restarts";
+                        Button_Stop.Enabled = false;
+                    }
+                    else
+                    {
+                        Button_Start.Enabled = true;
+                        Button_Stop.Enabled = false;
+                    }
+                }
+                // Start
+                else
+                {
+                    if (fromUptimeManager)
+                    {
+                        Button_Start.Enabled = false;
+                        Button_Start.Text = "Start";
+                        Button_Stop.Enabled = true;
+                    }
+                    else
+                    {
+                        Button_Start.Enabled = false;
+                        Button_Stop.Enabled = true;
+                    }
+                }
+            }));
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
+            Manager.RunningStateChanged += Manager_RunningStateChanged;
             try
             {
                 LoadUISettings();
@@ -151,15 +184,11 @@ namespace WinMXChannelRejoiner
         private void Button_Start_Click(object sender, EventArgs e)
         {
             Manager.Start();
-            Button_Start.Enabled = false;
-            Button_Stop.Enabled = true;
         }
 
         private void Button_Stop_Click(object sender, EventArgs e)
         {
             Manager.Stop();
-            Button_Start.Enabled = true;
-            Button_Stop.Enabled = false;
         }
 
         /// <summary>

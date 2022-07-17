@@ -17,6 +17,7 @@ namespace WinMXChannelRejoiner.Manager
     {
         Timer Updater;
         Timer MessageSender;
+        Timer UptimeManager;
         List<String> ExcludedChannels;
         List<JoinAttempt> Attempts;
         int RejoinDuration;
@@ -24,6 +25,10 @@ namespace WinMXChannelRejoiner.Manager
         bool OpenOnBootup;
         bool SendAutoRejoinMessage;
         string AutoRejoinMessage;
+        bool DisabledUntilWinMXRestart = false;
+        int WinMXPIDAtDisabledTime;
+        bool IsRunning = false;
+        public Action<bool, bool> RunningStateChanged;
 
 
         public ChatManager()
@@ -58,16 +63,61 @@ namespace WinMXChannelRejoiner.Manager
             Settings.Default.Save();
         }
 
-        public void Start()
+        public void Start(bool fromUptimeManager = false)
         {
             Updater = new Timer(new TimerCallback(ManageChannels), null, 5000, RejoinDuration * 60000);
             MessageSender = new Timer(new TimerCallback(ManageAutoRejoinMessages), null, 30000, 5000);
+            if (UptimeManager == null)
+            {
+                UptimeManager = new Timer(new TimerCallback(ManageUptimeOverflowAutoStop), null, 5000, 5000);
+            }
+            IsRunning = true;
+            if (RunningStateChanged != null)
+            {
+                RunningStateChanged(true, fromUptimeManager);
+            }
         }
 
-        public void Stop()
+        public void Stop(bool fromUptimeManager = false)
         {
             if (Updater != null)
+            {
                 Updater.Dispose();
+            }
+
+            if (MessageSender != null)
+            {
+                MessageSender.Dispose();
+            }
+            IsRunning = false;
+            if (RunningStateChanged != null)
+            {
+                RunningStateChanged(false, fromUptimeManager);
+            }
+        }
+
+        void ManageUptimeOverflowAutoStop(object o)
+        {
+            // Check if we're within 1 minute of GetTickCount() overflowing (WinMX breaks when this value overflows until it is re-opened. This also causes WinMX to fall out of chat rooms and the rejoiner to constantly re-add users)
+            if (IsRunning && ((uint)Environment.TickCount) % uint.MaxValue <= 60000)
+            {
+                this.WinMXPIDAtDisabledTime = ProcessInfo.GetWinMXProcessID();
+                this.DisabledUntilWinMXRestart = true;
+                this.Stop(true);
+                return;
+
+            }
+
+            // If we're disabled due to the overflow, check for new WinMX PID to enable starting again.
+            if (this.DisabledUntilWinMXRestart)
+            {
+                var pid = ProcessInfo.GetWinMXProcessID();
+                if (pid != this.WinMXPIDAtDisabledTime && pid != 0)
+                {
+                    this.DisabledUntilWinMXRestart = false;
+                    this.Start(true);
+                }
+            }
         }
 
         void ManageAutoRejoinMessages(object o)
